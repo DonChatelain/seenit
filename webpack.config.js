@@ -5,7 +5,7 @@ const WEB_PAGE_TITLE = 'Seenit';
 
 module.exports = {
   mode: 'development',
-  entry: './index.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.bundle.js'
@@ -18,7 +18,12 @@ module.exports = {
         use: {
           loader: "babel-loader",
         }
-      }
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: ["style-loader", "css-loader"],
+      },
     ]
   },
   devServer: {
@@ -29,6 +34,9 @@ module.exports = {
   plugins: [
     new HtmlPlugin({
       title: WEB_PAGE_TITLE,
+      hash: true,
+      template: './src/template.html',
+      inject: 'body',
     }),
   ]
 };
